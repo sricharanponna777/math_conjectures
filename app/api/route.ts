@@ -1,54 +1,34 @@
-import { NextRequest } from "next/server";
-import { spawn } from "child_process";
+// app/api/perfect/route.ts
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+// Function to check if a number is perfect
+function isPerfect(num: number): boolean {
+  if (num <= 1) return false;
+
+  let sum = 1; // start with 1 (divisor of all numbers)
+  for (let i = 2; i <= Math.sqrt(num); i++) {
+    if (num % i === 0) {
+      sum += i;
+      if (i !== num / i) sum += num / i; // add the paired divisor
+    }
+  }
+
+  return sum === num;
+}
+
+export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const limit = searchParams.get("limit") || "50";
+  const n = parseInt(searchParams.get("n") || "0", 10);
 
-  const stream = new ReadableStream({
-    start(controller) {
-      const encoder = new TextEncoder();
-      const py = spawn("python3", ["app/api/perfectNums.py", limit]);
+  if (isNaN(n) || n <= 0) {
+    return NextResponse.json(
+      { error: "Please provide a positive integer n." },
+      { status: 400 }
+    );
+  }
 
-      let closed = false;
-
-      const onData = (data: Buffer) => {
-        if (closed) return;
-        const lines = data.toString().split("\n").filter(Boolean);
-        for (const line of lines) {
-          try {
-            controller.enqueue(encoder.encode(`data: ${line}\n\n`));
-          } catch {
-            // stream already closed
-          }
-        }
-      };
-
-      const onClose = () => {
-        if (!closed) {
-          closed = true;
-          controller.close();
-        }
-      };
-
-      py.stdout.on("data", onData);
-      py.stderr.on("data", (data) => console.error("Python error:", data.toString()));
-      py.on("close", onClose);
-      py.on("exit", onClose);
-
-      // Handle client disconnect (important for SSE!)
-      req.signal?.addEventListener("abort", () => {
-        py.kill("SIGINT");
-        onClose();
-      });
-    },
-  });
-
-  return new Response(stream, {
-    headers: {
-      "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
-      Connection: "keep-alive",
-    },
+  return NextResponse.json({
+    number: n,
+    isPerfect: isPerfect(n),
   });
 }
