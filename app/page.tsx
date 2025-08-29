@@ -1,25 +1,13 @@
-"use client";
-import { useEffect, useState } from "react";
+import Link from 'next/link'
+import React from 'react'
 
-export default function PerfectNumbersPage() {
-  const [numbers, setNumbers] = useState<string[]>([]);
-
-  useEffect(() => {
-    const evtSource = new EventSource("/api?limit=50");
-    evtSource.onmessage = (event) => {
-      setNumbers((prev) => [...prev, event.data]);
-    };
-    return () => evtSource.close();
-  }, []);
-
+function PerfectNumbers() {
   return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold">Mersenne Perfect Numbers</h1>
-      <ul className="mt-4 space-y-2">
-        {numbers.map((n, idx) => (
-          <li key={idx} className="font-mono">{n}</li>
-        ))}
-      </ul>
-    </main>
-  );
+    <div>
+      <Link href="/mersenne">Mersenne Perfect Numbers</Link>
+      <Link href="/collatz">Collatz Conjecture</Link>
+    </div>
+  )
 }
+
+export default PerfectNumbers
