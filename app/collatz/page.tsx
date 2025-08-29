@@ -85,7 +85,7 @@ export default function CollatzChart() {
     <Line
       type="monotone"
       dataKey="value"
-      stroke={theme === 'dark' ? "black" : "white"}
+      stroke={theme === 'dark' ? "white" : "white"}
       dot={false}
       strokeWidth={2}
     />
