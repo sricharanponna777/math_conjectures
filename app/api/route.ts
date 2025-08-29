@@ -37,7 +37,6 @@ export async function GET(req: NextRequest) {
       py.on("exit", onClose);
 
       // Handle client disconnect (important for SSE!)
-      // @ts-ignore (not typed in Next.js yet)
       req.signal?.addEventListener("abort", () => {
         py.kill("SIGINT");
         onClose();
