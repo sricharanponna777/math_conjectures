@@ -94,7 +94,7 @@ export default function GoldbachVisualizer() {
 
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
-      <h1 className="text-3xl md:text-4xl font-bold mb-2">Goldbach's Conjecture</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-2">Goldbach Conjecture</h1>
       <p className="text-muted-foreground mb-6 max-w-3xl">
         Every even integer greater than 2 can be expressed as the sum of two prime numbers. This tool lets you
         <span className="font-medium"> inspect a specific even N</span> and <span className="font-medium">explore how many representations</span> appear across a range.
@@ -208,7 +208,7 @@ export default function GoldbachVisualizer() {
 
       <div className="mt-8 text-sm text-muted-foreground space-y-2">
         <p>
-          Note: Goldbach's conjecture remains unproven. This explorer provides computational evidence by enumerating
+          Note: Goldbach conjecture remains unproven. This explorer provides computational evidence by enumerating
           prime pairs within your chosen limit.
         </p>
         <p>
