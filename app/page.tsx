@@ -12,7 +12,7 @@ function PerfectNumbers() {
         <Button className='bg-blue-500 hover:underline text-white rounded'>Collatz Conjecture</Button>
       </Link>
       <Link href="/goldbach">
-        <Button className='bg-blue-500 hover:underline text-white rounded'>Goldbach's Conjecture</Button>
+        <Button className='bg-blue-500 hover:underline text-white rounded'>Goldbach Conjecture</Button>
       </Link>
     </div>
   )
